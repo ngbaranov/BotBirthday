@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     DB_HOST: str
     DB_PORT: int
     DB_NAME: str
+    BOT_TOKEN: str
 
 
     # DATABASE_SQLITE = 'sqlite+aiosqlite:///data/db.sqlite3'
