@@ -1,4 +1,5 @@
-from sqlalchemy import ForeignKey
+from datetime import date
+from sqlalchemy import Date
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db.db import Base
 
@@ -8,7 +9,7 @@ class Birthday(Base):
 
     user_id: Mapped[int] = mapped_column(primary_key=True)
     full_name: Mapped[str]
-    birth_date: Mapped[str]
+    birth_date: Mapped[date] = mapped_column(Date)
 
     user = relationship("User", back_populates="birthdays")
 
