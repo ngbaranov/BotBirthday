@@ -3,9 +3,16 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
+from aiogram.fsm.storage.memory import MemoryStorage
+
 from settings import settings
 from handlers.start import start_router
 from handlers.add import add_router
+from handlers.view import view_router
+from handlers.delete import delete_router
+from handlers.edit import edit_router
+from middlewares.db_session import DBSessionMiddleware
+from db.db_depends import get_db
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,9 +27,16 @@ async def main():
         token=settings.BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
-    dp = Dispatcher()
+    dp = Dispatcher(storage=MemoryStorage(), handle_out_of_scope_messages=True)
+
+    dp.update.middleware(DBSessionMiddleware(get_db))
+
     dp.include_router(start_router)
+    dp.include_router(edit_router)
     dp.include_router(add_router)
+    dp.include_router(view_router)
+    dp.include_router(delete_router)
+
 
     try:
         await dp.start_polling(bot)

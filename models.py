@@ -11,7 +11,7 @@ class Birthday(Base):
     full_name: Mapped[str]
     birth_date: Mapped[date] = mapped_column(Date)
 
-    user = relationship("User", back_populates="birthdays")
+
 
     def __repr__(self):
         return f"User(id={self.user_id}, full_name={self.full_name}, date={self.birth_date})"
