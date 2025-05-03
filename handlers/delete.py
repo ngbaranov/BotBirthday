@@ -3,7 +3,11 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from aiogram.filters.callback_data import CallbackData
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from models import Birthday
+from dao.dao import BirthdayDAO
+
+
 
 delete_router = Router()
 
@@ -13,8 +17,8 @@ class DeleteCallback(CallbackData, prefix="delete"):
 @delete_router.message(F.text == "Удалить ДР")
 async def show_birthdays_for_delete(message: Message, session: AsyncSession):
     user_id = message.from_user.id
-    result = await session.execute(select(Birthday).where(Birthday.user_id == user_id))
-    birthdays = result.scalars().all()
+    birthdays = await BirthdayDAO(session).get_sorted_by_user_id(user_id)
+
 
     if not birthdays:
         await message.answer("У вас нет записей для удаления.")
@@ -36,8 +40,8 @@ async def delete_selected_birthday(
     session: AsyncSession
 ):
     birthday_id = callback_data.birthday_id
-    await session.execute(delete(Birthday).where(Birthday.id == birthday_id))
-    await session.commit()
+
+    await BirthdayDAO(session).delete(birthday_id)
 
     await callback.message.edit_text("✅ Запись удалена.")
     await callback.answer()
