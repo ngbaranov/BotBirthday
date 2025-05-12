@@ -1,0 +1,13 @@
+services:
+  bot:
+    build: .
+    container_name: bot-birthdays
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - bot-net
+
+networks:
+  bot-net:
+    driver: bridge

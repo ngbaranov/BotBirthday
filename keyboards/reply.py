@@ -4,6 +4,7 @@ def main_kb():
     kb_list = [
         [KeyboardButton(text="Добавить ДР"), KeyboardButton(text="Просмотр ДР")],
         [KeyboardButton(text="Редактировать ДР"), KeyboardButton(text="Удалить ДР")],
+        [KeyboardButton(text='Тексты поздравлений')]
     ]
     return ReplyKeyboardMarkup(keyboard=kb_list, resize_keyboard=True)
 

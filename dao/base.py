@@ -44,6 +44,17 @@ class BaseDAO(Generic[T]):
             logger.error(f"Ошибка при получении записи: {e}")
             raise
 
+
+    async def get_select_by_fields(self, **kwargs):
+        try:
+            result = await self._session.execute(
+                select(self.model).filter_by(**kwargs)
+            )
+            return result.scalars().all()
+        except SQLAlchemyError as e:
+            logger.error(f"Ошибка при получении записи: {e}")
+            raise
+
     async def update_fields(self, entry_id: int, **kwargs):
         try:
             await self._session.execute(
