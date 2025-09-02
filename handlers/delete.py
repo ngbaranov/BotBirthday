@@ -12,10 +12,12 @@ from dao.dao import BirthdayDAO
 delete_router = Router()
 
 class DeleteCallback(CallbackData, prefix="delete"):
+    """Этот класс используется для передачи ID записи при нажатии на inline-кнопки."""
     birthday_id: int
 
 @delete_router.message(F.text == "Удалить ДР")
 async def show_birthdays_for_delete(message: Message, session: AsyncSession):
+    """Показывает список дней рождений с inline-кнопками для удаления."""
     user_id = message.from_user.id
     birthdays = await BirthdayDAO(session).get_sorted_by_user_id(user_id)
 
@@ -39,6 +41,7 @@ async def delete_selected_birthday(
     callback_data: DeleteCallback,
     session: AsyncSession
 ):
+    """Удаляет выбранный день рождения из базы данных."""
     birthday_id = callback_data.birthday_id
 
     await BirthdayDAO(session).delete(birthday_id)

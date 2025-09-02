@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     DB_PORT: int
     DB_NAME: str
     BOT_TOKEN: str
+    OPENAI_API_KEY: str
 
 
     # DATABASE_SQLITE = 'sqlite+aiosqlite:///data/db.sqlite3'

@@ -4,6 +4,10 @@ from aiogram.types import TelegramObject
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 class DBSessionMiddleware(BaseMiddleware):
+    """
+    создаёт асинхронную сессию SQLAlchemy на каждый апдейт/ивент
+    и прокидывает её в контекст обработчика под ключом data["session"].
+    """
     def __init__(self, session_pool: async_sessionmaker[AsyncSession]):
         self.session_pool = session_pool
 

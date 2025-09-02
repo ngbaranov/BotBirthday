@@ -10,6 +10,12 @@ class BirthdayDAO(BaseDAO[Birthday]):
     model = Birthday
 
     async def get_sorted_by_user_id(self, user_id: int):
+        """
+        Получение всех дней рождений пользователя, отсортированных от сегодняшней даты,
+        то есть ближайшие дни рождения будут первыми в списке.
+        :param user_id:
+        :return:
+        """
         today_mmdd = date.today().strftime("%m-%d")
 
         # Используем CASE для сортировки от сегодняшней даты

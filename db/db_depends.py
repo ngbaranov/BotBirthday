@@ -6,5 +6,6 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def get_db() -> AsyncGenerator[Any, Any]:
+    """Асинхронный генератор сессий базы данных."""
     async with async_session_maker() as session:
         yield session
