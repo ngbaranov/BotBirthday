@@ -11,6 +11,13 @@ view_router = Router()
 
 @view_router.message(F.text == "Просмотр ДР")
 async def view_birthdays(message: Message, session: AsyncSession):
+    """
+    Обрабатывает команду "Просмотр ДР".
+    Получает и отображает все дни рождения пользователя, сгруппированные по месяцам.
+    :param message: Объект сообщения от пользователя.
+    :param session: Асинхронная сессия базы данных.
+    """
+    # Получаем дни рождения пользователя из базы данных
     user_id = message.from_user.id
     birthdays = await BirthdayDAO(session).get_sorted_by_user_id(user_id)
 

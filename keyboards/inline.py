@@ -4,6 +4,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from models import Birthday
 
 def edit_selection_kb(birthdays: list[Birthday]) -> InlineKeyboardMarkup:
+    """Создает InlineKeyboardMarkup для выбора записи о дне рождении для редактирования."""
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
